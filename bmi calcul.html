@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator with Name, Age, Gender</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'times new roman','Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #fc25cd,#ff758c);
+
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            background: #ff758c;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #ff7eb3;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #bmiForm {
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>BMI Calculator 🏋‍♂</h2>
+        <button onclick="showForm()">Click Here</button>
+
+        <!-- BMI Input Form -->
+        <div id="bmiForm">
+            <input type="text" id="name" placeholder="Enter your name">
+            <input type="number" id="weight" placeholder="Enter your weight (kg)" step="0.1">
+            <input type="number" id="height" placeholder="Enter your height (m)" step="0.01">
+            <input type="number" id="age" placeholder="Enter your age" step="1">
+            
+            <select id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            
+            <button onclick="calculateBMI()">Calculate BMI</button>
+            <p id="result"></p>
+        </div>
+    </div>
+
+    <script>
+        function showForm() {
+            document.getElementById("bmiForm").style.display = "block";
+        }
+
+        function calculateBMI() {
+            let name = document.getElementById("name").value;
+            let weight = parseFloat(document.getElementById("weight").value);
+            let height = parseFloat(document.getElementById("height").value);
+            let age = document.getElementById("age").value;
+            let gender = document.getElementById("gender").value;
+
+            if (!name || !weight || !height || !age) {
+                alert("Please enter all the fields!");
+                return;
+            }
+
+            // Calculate BMI
+            let bmi = weight / (height * height);
+            bmi = bmi.toFixed(2);  // Round to 2 decimal places
+
+            // Determine BMI category
+            let category = '';
+            if (bmi < 18.5) {
+                category = 'Underweight';
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                category = 'Normal weight';
+            } else if (bmi >= 25 && bmi < 29.9) {
+                category = 'Overweight';
+            } else {
+                category = 'Obese';
+            }
+
+            // Generate result message
+            let resultText = `${name}, your BMI is ${bmi}<br>Category: ${category}<br>Age: ${age} years<br>Gender: ${gender}`;
+            let resultElement = document.getElementById("result");
+            resultElement.innerHTML = resultText;
+            resultElement.style.opacity = "1";
+        }
+    </script>
+</body>
+</html>
